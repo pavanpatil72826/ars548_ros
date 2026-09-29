@@ -28,6 +28,7 @@
 #include "ars548_messages/msg/status.hpp"
 #include "ars548_messages/msg/detection_list.hpp"
 #include "ars548_messages/msg/object_list.hpp"
+#include "ars548_messages/msg/filter_status.hpp"
 #include "ars548_data.h"
 
 #define MSGBUFSIZE 102400
@@ -60,6 +61,7 @@ class ars548_driver : public rclcpp::Node{
     rclcpp::Publisher<ars548_messages::msg::Status>::SharedPtr statusPublisher;
     rclcpp::Publisher<ars548_messages::msg::ObjectList>::SharedPtr objectsPublisher;
     rclcpp::Publisher<ars548_messages::msg::DetectionList>::SharedPtr detectionsPublisher;
+    rclcpp::Publisher<ars548_messages::msg::FilterStatus>::SharedPtr filterStatusPublisher;
     rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr directionPublisher;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr objectsCloudPublisher;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr detectionsCloudPublisher;

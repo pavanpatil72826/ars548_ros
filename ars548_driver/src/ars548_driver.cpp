@@ -38,6 +38,7 @@ ars548_driver::ars548_driver() : Node("ars_548_driver"),
     statusPublisher = create_publisher<ars548_messages::msg::Status>("Status", 10);
     objectsPublisher = create_publisher<ars548_messages::msg::ObjectList>("ObjectList", 10);
     detectionsPublisher = create_publisher<ars548_messages::msg::DetectionList>("DetectionList", 10);
+    filterStatusPublisher = create_publisher<ars548_messages::msg::FilterStatus>("FilterStatus", 10);
     directionPublisher = create_publisher<geometry_msgs::msg::PoseArray>("DirectionVelocity", 10);
     objectsCloudPublisher = create_publisher<sensor_msgs::msg::PointCloud2>("PointCloudObject", 10);
     detectionsCloudPublisher = create_publisher<sensor_msgs::msg::PointCloud2>("PointCloudDetection", 10);
@@ -205,8 +206,26 @@ void ars548_driver::receive_data_loop()
                     }
                 }
                 break;
+            case FILTER_STATUS_MESSAGE_PAYLOAD:
+                {
+                    struct UDPFilterStatus filter_status;
+                    if (filter_status.receiveFilterStatusMsg(nbytes, msgbuf)) {
+                        filterStatusPublisher->publish(filter_status.toMsg());
+                    } else {
+                        // FILTER_STATUS_MESSAGE_PDU_LENGTH is a computed estimate (the SDK docs
+                        // don't publish it) - log the raw MethodID/PayloadLength to confirm.
+                        RCLCPP_WARN(this->get_logger(),
+                            "Packet matched FILTER_STATUS_MESSAGE_PAYLOAD size but failed validation. "
+                            "MethodID=%u PayloadLength=%u (expected PDU length %d) - verify FilterStatus constants.",
+                            byteswap(*(uint16_t*)(msgbuf + 2)), byteswap(*(uint32_t*)(msgbuf + 4)),
+                            FILTER_STATUS_MESSAGE_PDU_LENGTH);
+                    }
+                }
+                break;
             default:
-                // Unknown packet size
+                // Unknown packet size. Uncomment to help identify undocumented message sizes
+                // (e.g. to confirm FilterStatus's true payload size/Method ID on your sensor):
+                // RCLCPP_INFO(this->get_logger(), "Unhandled UDP payload size: %d bytes", nbytes);
                 break;
             }
         }

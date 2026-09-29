@@ -16,6 +16,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Object.msg"
   "msg/ObjectList.msg"
   "msg/Status.msg"
+  "msg/FilterStatusEntry.msg"
+  "msg/FilterStatus.msg"
   "msg/AccelerationLateralCoG.msg"
   "msg/AccelerationLongitudinalCoG.msg"
   "msg/CharacteristicSpeed.msg"

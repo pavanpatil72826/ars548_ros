@@ -14,6 +14,7 @@
 #include "ars548_data/udp_status.h"
 #include "ars548_data/object_list.h"
 #include "ars548_data/detection_list.h"
+#include "ars548_data/filter_status.h"
 
 // CONFIGURATION MESSAGES
 #include "ars548_data/sensor_configuration.h"
