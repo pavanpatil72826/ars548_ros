@@ -16,7 +16,7 @@ float32 u_position_orientation #Object Orientation
 float32 u_position_orientation_std #Orientation Std
 uint8 u_existence_invalidflags #unused
 float32 u_existence_probability #Probability of Existence
-float32 u_existence_ppv #unused
+float32 f_rcs #Object RCS
 uint8 u_classification_car #Car Classification Probability
 uint8 u_classification_truck #Truck Classification Probability
 uint8 u_classification_motorcycle #Motorcycle Classification Probability

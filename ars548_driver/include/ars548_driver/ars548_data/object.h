@@ -23,7 +23,7 @@ struct Object{
     float u_Position_Orientation_STD;
     uint8_t u_Existence_InvalidFlags;
     float u_Existence_Probability;
-    float u_Existence_PPV;
+    float f_RCS;
     uint8_t u_Classification_Car;
     uint8_t u_Classification_Truck;
     uint8_t u_Classification_Motorcycle;
@@ -91,7 +91,7 @@ inline void Object::changeEndianness() {
     u_Position_Orientation = byteswap(u_Position_Orientation);
     u_Position_Orientation_STD = byteswap(u_Position_Orientation_STD);
     u_Existence_Probability = byteswap(u_Existence_Probability);
-    u_Existence_PPV = byteswap(u_Existence_PPV);
+    f_RCS = byteswap(f_RCS);
     f_Dynamics_AbsVel_X = byteswap(f_Dynamics_AbsVel_X);
     f_Dynamics_AbsVel_X_STD = byteswap(f_Dynamics_AbsVel_X_STD);
     f_Dynamics_AbsVel_Y = byteswap(f_Dynamics_AbsVel_Y);
@@ -139,7 +139,7 @@ inline ars548_messages::msg::Object Object::toMsg() {
     o.u_position_orientation = u_Position_Orientation;
     o.u_position_orientation_std = u_Position_Orientation_STD;
     o.u_existence_invalidflags = u_Existence_InvalidFlags;
-    o.u_existence_ppv = u_Existence_PPV;
+    o.f_rcs = f_RCS;
     o.u_existence_probability = u_Existence_Probability;
     o.u_dynamics_absaccel_invalidflags = u_Dynamics_AbsAccel_InvalidFlags;
     o.u_dynamics_absvel_invalidflags = u_Dynamics_AbsVel_InvalidFlags;
