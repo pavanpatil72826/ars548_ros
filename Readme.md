@@ -247,6 +247,36 @@ The parameter list can be obtained by executing the next command:
     >ros2 run ars548_driver radar_setup.cpp -h
 ```
 
+Troubleshooting build errors
+---
+These are common errors when running `colcon build` and how to fix them.
+
+* ### `fatal error: tclap/CmdLine.h: No such file or directory`
+    The TCLAP command-line parsing library is missing. Install it:
+    ```
+    sudo apt-get install libtclap-dev
+    ```
+    If `apt` cannot find the package, enable the *universe* repository first:
+    ```
+    sudo add-apt-repository universe && sudo apt-get update
+    ```
+
+* ### `fatal error: stdfloat: No such file or directory`
+    `<stdfloat>` is a C++23 header that only exists in **GCC 13 or newer**. On
+    Ubuntu 22.04 the default compiler is GCC 11, which does not ship it.
+
+    The header is not actually needed by the driver (only plain `float` is used),
+    so the simplest fix is to remove the unused include from
+    `ars548_driver/src/radar_setup.cpp`:
+    ```
+    #include <stdfloat>   // <-- delete this line
+    ```
+    Alternatively, install a newer compiler and build with it:
+    ```
+    sudo apt-get install g++-13
+    colcon build --cmake-args -DCMAKE_CXX_COMPILER=g++-13
+    ```
+
 ## Citation
 
 If you find this driver useful for your research, please consider to add the following citation.
